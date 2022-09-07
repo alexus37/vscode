@@ -6,7 +6,7 @@
 import { CancellationToken } from 'vs/base/common/cancellation';
 import { Emitter, Event } from 'vs/base/common/event';
 import { IDisposable } from 'vs/base/common/lifecycle';
-import { isWindows, OperatingSystem } from 'vs/base/common/platform';
+import { isMacintosh, isWindows, OperatingSystem } from 'vs/base/common/platform';
 import { URI } from 'vs/base/common/uri';
 import { createDecorator } from 'vs/platform/instantiation/common/instantiation';
 import { ILogService } from 'vs/platform/log/common/log';
@@ -157,9 +157,9 @@ export function isAllInterfaces(host: string): boolean {
 
 export function isPortPrivileged(port: number, os?: OperatingSystem): boolean {
 	if (os) {
-		return os !== OperatingSystem.Windows && (port < 1024);
+		return os === OperatingSystem.Linux && (port < 1024);
 	} else {
-		return !isWindows && (port < 1024);
+		return !isWindows && !isMacintosh && (port < 1024);
 	}
 }
 
